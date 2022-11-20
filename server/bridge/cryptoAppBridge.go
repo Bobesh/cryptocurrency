@@ -1,6 +1,5 @@
 package bridge
 
-type App interface {
+type CryptoApp interface {
 	GetCryptoCurrencies(currency string) (interface{}, error)
-	FindHash(hashStr string) (interface{}, error)
 }

@@ -8,16 +8,18 @@ import (
 )
 
 type EchoApi struct {
-	echo *echo.Echo
-	app  bridge.App
-	port string
+	echo      *echo.Echo
+	cryptoApp bridge.CryptoApp
+	hashApp   bridge.HashApp
+	port      string
 }
 
-func NewEchoApi(app bridge.App, port string) *EchoApi {
+func NewEchoApi(cryptoApp bridge.CryptoApp, hashApp bridge.HashApp, port string) *EchoApi {
 	return &EchoApi{
-		echo: echo.New(),
-		app:  app,
-		port: port,
+		echo:      echo.New(),
+		cryptoApp: cryptoApp,
+		hashApp:   hashApp,
+		port:      port,
 	}
 }
 
@@ -34,19 +36,19 @@ func respond(c echo.Context, res interface{}, err error) error {
 	if err != nil {
 		return err
 	}
-	return c.JSON(http.StatusOK, res)
+	return c.JSONPretty(http.StatusOK, res, "\t")
 }
 
 func (e *EchoApi) getCryptocurrency(c echo.Context) error {
 	currency := c.FormValue("currency")
-	app := e.app
+	app := e.cryptoApp
 	res, err := app.GetCryptoCurrencies(currency)
 	return respond(c, res, err)
 }
 
 func (e *EchoApi) findHash(c echo.Context) error {
 	hashStr := c.FormValue("hash")
-	app := e.app
+	app := e.hashApp
 	res, err := app.FindHash(hashStr)
 	return respond(c, res, err)
 }

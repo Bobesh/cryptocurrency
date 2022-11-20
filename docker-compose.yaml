@@ -10,3 +10,4 @@ services:
       PORT: "1323"
       API_ROOT: "https://api.coingecko.com/api/v3"
       ENDPOINT: "coins/markets"
+      FILES: "files"

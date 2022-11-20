@@ -9,12 +9,14 @@ const (
 	ApiRoot  = "API_ROOT"
 	Endpoint = "ENDPOINT"
 	Port     = "PORT"
+	FilesDir = "FILES"
 )
 
 type Config struct {
 	apiRoot  string
 	endpoint string
 	port     string
+	filesDir string
 }
 
 func NewConfig() *Config {
@@ -22,6 +24,7 @@ func NewConfig() *Config {
 		apiRoot:  os.Getenv(ApiRoot),
 		endpoint: os.Getenv(Endpoint),
 		port:     os.Getenv(Port),
+		filesDir: os.Getenv(FilesDir),
 	}
 }
 
@@ -31,4 +34,8 @@ func (c *Config) GetApiPath() string {
 
 func (c *Config) GetPort() string {
 	return c.port
+}
+
+func (c *Config) GetFilesDir() string {
+	return c.filesDir
 }

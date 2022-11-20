@@ -2,13 +2,14 @@ package main
 
 import (
 	api2 "server/api"
-	app2 "server/app"
+	apps "server/apps"
 	"server/config"
 )
 
 func main() {
 	cfg := config.NewConfig()
-	app := app2.NewApp(cfg.GetApiPath(), nil)
-	api := api2.NewEchoApi(app, cfg.GetPort())
+	cryptoApp := apps.NewCryptoApp(cfg.GetApiPath(), nil)
+	hashApp := apps.NewHashApp(cfg.GetFilesDir())
+	api := api2.NewEchoApi(cryptoApp, hashApp, cfg.GetPort())
 	api.Serve()
 }
