@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"strings"
 )
 
 const (
@@ -40,8 +39,7 @@ type resultCurrencyJson struct {
 }
 
 func (a CryptoApp) GetCryptoCurrencies(currencyStr string) (interface{}, error) {
-	req, err := http.NewRequest("GET",
-		strings.Join([]string{a.apiPath, fmt.Sprintf("%s=%s", CurrencyQuery, currencyStr)}, "?"),
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s?%s=%s", a.apiPath, CurrencyQuery, currencyStr),
 		nil)
 	if err != nil {
 		return nil, err
